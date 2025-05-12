@@ -1,24 +1,24 @@
 version: "3.8"
 
 services:
-  app1:
+  app:
     build:
       context: .
       dockerfile: Dockerfile.spring
-    image: my-spring-boot-app1
+    image: my-spring-boot-app
     ports:
       - "8004:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:mariadb://db1:3306/mydb
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://db:3306/mydb
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=123
     depends_on:
-      - db1
+      - db
     networks:
       - nginx-network
 
-  db1:
+  db:
     build:
       context: .
       dockerfile: Dockerfile.mysql
@@ -31,47 +31,12 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - db_data1:/var/lib/mysql
-    networks:
-      - nginx-network
-
-  app2:
-    build:
-      context: .
-      dockerfile: Dockerfile.spring
-    image: my-spring-boot-app2
-    ports:
-      - "8082:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:mariadb://db2:3306/mydb
-      - SPRING_DATASOURCE_USERNAME=admin
-      - SPRING_DATASOURCE_PASSWORD=123
-    depends_on:
-      - db2
-    networks:
-      - nginx-network
-
-  db2:
-    build:
-      context: .
-      dockerfile: Dockerfile.mysql
-    image: my-mariadb
-    environment:
-      - MARIADB_ROOT_PASSWORD=123
-      - MARIADB_DATABASE=mydb
-      - MARIADB_USER=admin
-      - MARIADB_PASSWORD=123
-    ports:
-      - "3306:3306"
-    volumes:
-      - db_data2:/var/lib/mysql
+      - db_data:/var/lib/mysql
     networks:
       - nginx-network
 
 volumes:
-  db_data1:
-  db_data2:
+  db_data:
 
 networks:
   nginx-network:
