@@ -13,6 +13,8 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mariadb://db:3306/mydb
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=123
+      - SPRING_DATASOURCE_DRIVER=org.mariadb.jdbc.Driver
+      - SPRING_JPA_DIALECT=org.hibernate.dialect.MariaDBDialect
     depends_on:
       - db
     networks:
