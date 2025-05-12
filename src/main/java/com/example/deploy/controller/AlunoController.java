@@ -12,39 +12,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.deploy.model.Produto;
-import com.example.deploy.service.ProdutoService;
+import com.example.deploy.model.Aluno;
+import com.example.deploy.service.AlunoService;
 
-@CrossOrigin(origins = "*") // ou especifique seu domínio
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/produtos")
-public class ProdutoController {
+@RequestMapping("/alunos")
+public class AlunoController {
 
-    private final ProdutoService service;
+    private final AlunoService service;
 
-    public ProdutoController(ProdutoService service) {
+    public AlunoController(AlunoService service) {
         this.service = service;
     }
 
     @PostMapping
-    public Produto adicionar(@RequestBody Produto produto) {
-        return service.salvar(produto);
+    public Aluno adicionar(@RequestBody Aluno aluno) {
+        return service.salvar(aluno);
     }
 
     @GetMapping
-    public List<Produto> listar() {
+    public List<Aluno> listar() {
         return service.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public Produto buscarPorId(@PathVariable Long id) {
+    public Aluno buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id);
     }
 
     @PutMapping("/{id}")
-    public Produto atualizar(@PathVariable Long id, @RequestBody Produto produto) {
-        produto.setId(id);
-        return service.salvar(produto);
+    public Aluno atualizar(@PathVariable Long id, @RequestBody Aluno aluno) {
+        aluno.setId(id);
+        return service.salvar(aluno);
     }
 
     @DeleteMapping("/{id}")
