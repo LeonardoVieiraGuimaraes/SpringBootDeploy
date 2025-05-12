@@ -1,6 +1,7 @@
 package com.example.deploy.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,14 @@ public class ProdutoService {
 
     public List<Produto> listarTodos() {
         return repository.findAll();
+    }
+
+    public Produto buscarPorId(Long id) {
+        Optional<Produto> produto = repository.findById(id);
+        return produto.orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+    }
+
+    public void excluir(Long id) {
+        repository.deleteById(id);
     }
 }
