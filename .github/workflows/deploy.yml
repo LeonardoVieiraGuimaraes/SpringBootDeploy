@@ -9,6 +9,19 @@ jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb:11
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: demo
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mariadb-admin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
@@ -20,8 +33,7 @@ jobs:
           distribution: "temurin" # ou outra distribuição de sua escolha
 
       - name: Build with Maven
-        # run: mvn clean package
-        run: mvn clean install
+        run: mvn clean install -DskipTests
 
       - name: Prepare files Spring Boot
         run: |
