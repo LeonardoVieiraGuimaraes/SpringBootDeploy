@@ -33,7 +33,14 @@ jobs:
           distribution: "temurin" # ou outra distribuição de sua escolha
 
       - name: Build and Test with Maven
-        run: mvn clean install
+        run: mvn clean install -Dspring.profiles.active=test
+
+      - name: Save test reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: target/surefire-reports/
 
       - name: Prepare files Spring Boot
         run: |
@@ -42,13 +49,7 @@ jobs:
           cp docker-compose.yml SpringBoot/
           cp Dockerfile.spring SpringBoot/
           cp Dockerfile.mysql SpringBoot/
-
-      - name: Save test reports
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: surefire-reports
-          path: target/surefire-reports/
+          cp init.sql SpringBoot/
 
       - name: deletando no servidor
         uses: appleboy/ssh-action@v1.0.0
@@ -82,5 +83,3 @@ jobs:
             cd SpringBoot
             docker compose up -d --build
             docker compose restart
-      - name: Run tests
-        run: mvn test -Dspring.profiles.active=test
