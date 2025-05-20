@@ -43,6 +43,13 @@ jobs:
           cp Dockerfile.spring SpringBoot/
           cp Dockerfile.mysql SpringBoot/
 
+      - name: Save test reports
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: surefire-reports
+          path: target/surefire-reports/
+
       - name: deletando no servidor
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -75,3 +82,5 @@ jobs:
             cd SpringBoot
             docker compose up -d --build
             docker compose restart
+      - name: Run tests
+        run: mvn test -Dspring.profiles.active=test
