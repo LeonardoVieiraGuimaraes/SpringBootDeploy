@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mariadb://db:3306/mydb}
-    driver-class-name: ${SPRING_DATASOURCE_DRIVER:org.mariadb.jdbc.Driver}
-    username: ${SPRING_DATASOURCE_USERNAME:admin}
-    password: ${SPRING_DATASOURCE_PASSWORD:123}
+    url: jdbc:mariadb://db:3306/mydb
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: admin
+    password: 123
     hikari:
       connection-timeout: 30000 # 30 segundos
       maximum-pool-size: 10
@@ -13,4 +13,4 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        dialect: ${SPRING_JPA_DIALECT:org.hibernate.dialect.H2Dialect}
+        dialect: org.hibernate.dialect.MariaDBDialect
