@@ -42,7 +42,7 @@ services:
       test: ["CMD", "mariadb-admin", "ping", "--silent"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
     restart: always
 
 volumes:
