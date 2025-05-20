@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mariadb:
-        image: mariadb:11
+        image: mariadb:latest
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: deploy
@@ -42,7 +42,6 @@ jobs:
           cp docker-compose.yml SpringBoot/
           cp Dockerfile.spring SpringBoot/
           cp Dockerfile.mysql SpringBoot/
-          cp init.sql SpringBoot/
 
       - name: deletando no servidor
         uses: appleboy/ssh-action@v1.0.0
