@@ -1,10 +1,10 @@
 package com.example.deploy.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.deploy.exception.ResourceNotFoundException;
 import com.example.deploy.model.Produto;
 import com.example.deploy.repository.ProdutoRepository;
 
@@ -26,8 +26,8 @@ public class ProdutoService {
     }
 
     public Produto buscarPorId(Long id) {
-        Optional<Produto> produto = repository.findById(id);
-        return produto.orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com ID: " + id));
     }
 
     public void excluir(Long id) {

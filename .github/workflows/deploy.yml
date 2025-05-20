@@ -26,10 +26,10 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
 
-      - name: Set up JDK 24
+      - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
-          java-version: "24"
+          java-version: "21"
           distribution: "temurin" # ou outra distribuição de sua escolha
 
       - name: Build and Test with Maven
