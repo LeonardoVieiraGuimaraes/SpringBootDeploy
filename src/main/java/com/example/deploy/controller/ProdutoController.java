@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.deploy.model.Produto;
 import com.example.deploy.service.ProdutoService;
 
-@CrossOrigin(origins = "*") // ou especifique seu domínio
+@CrossOrigin(origins = "http://leoproti.combr") // Substitua pelo domínio do frontend
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
