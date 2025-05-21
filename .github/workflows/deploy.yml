@@ -9,19 +9,6 @@ jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
-    services:
-      mariadb:
-        image: mariadb:11
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: deploy
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mariadb-admin ping --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
@@ -30,7 +17,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: "24"
-          distribution: "temurin" # ou outra distribuição de sua escolha
+          distribution: "temurin"
 
       - name: Build with Maven
         run: mvn clean install -DskipTests
@@ -41,7 +28,6 @@ jobs:
           cp -r target SpringBoot
           cp docker-compose.yml SpringBoot/
           cp Dockerfile.spring SpringBoot/
-          cp Dockerfile.mysql SpringBoot/
 
       - name: deletando no servidor
         uses: appleboy/ssh-action@v1.0.0
