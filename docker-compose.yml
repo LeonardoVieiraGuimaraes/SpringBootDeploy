@@ -10,38 +10,13 @@ services:
       - "8004:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:mariadb://db:3306/mydb
-      - SPRING_DATASOURCE_USERNAME=admin
-      - SPRING_DATASOURCE_PASSWORD=123
-      - SPRING_DATASOURCE_DRIVER=org.mariadb.jdbc.Driver
-      - SPRING_JPA_DIALECT=org.hibernate.dialect.MariaDBDialect
-    depends_on:
-      - db
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+      - SPRING_DATASOURCE_DRIVER=org.h2.Driver
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_JPA_DIALECT=org.hibernate.dialect.H2Dialect
     networks:
       - nginx-network
-
-  db:
-    build:
-      context: .
-      dockerfile: Dockerfile.mysql
-    image: my-mariadb
-    environment:
-      - MARIADB_ROOT_PASSWORD=123
-      - MARIADB_DATABASE=mydb
-      - MARIADB_USER=admin
-      - MARIADB_PASSWORD=123
-    ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - nginx-network
-    healthcheck:
-      test: ["CMD", "mariadb-admin", "ping", "--silent"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-    restart: always
 
 networks:
   nginx-network:
